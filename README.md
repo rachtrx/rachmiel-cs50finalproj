@@ -1,6 +1,8 @@
 # INVENTORY - rachmiel-cs50finalproj
 
-#### Video Demo:  
+#### Video Demo: 
+
+## This project was build with WSL2 on Windows, so commands below are in Bash
 
 ## IMPORTANT: Docker is required to run this project!
 - This is because PostgreSQL is used instead of SQLite, and PostgreSQL can be easily run within a Docker container.
@@ -13,8 +15,10 @@
 
 # Steps after installing Docker:
 
-## Clone the repository
 - git clone https://github.com/rachtrx/rachmiel-cs50finalproj.git
+- python3 -m venv venv
+- . venv/bin/activate
+- cd rachmiel-cs50finalproj
 
 ## For CS50 staff:
 - remove all the .example extension for the env files, which would result in .env.dev, .env.prod, and .env.prod.db
@@ -31,8 +35,9 @@
 
 
 ### Development: Resets the database by default - see entrypoint.sh
-- npm install 
-- npm run start 
+- npm install
+- npm run start
+- npm run watch:sass
 - docker-compose -f docker-compose.yml up -d --build 
 - navigate to 127.0.0.1:5001
 
