@@ -23,7 +23,7 @@
 ## For CS50 staff:
 - remove all the .example extension for the env files, which would result in .env.dev, .env.prod, and .env.prod.db
 
-## BUILD
+## BUILD (choose between Prod or Dev)
 
 ### Production: If there is already a volume in Docker with the database, ignore create_db
 - npm install 
@@ -40,6 +40,9 @@
 - npm run watch:sass
 - docker-compose -f docker-compose.yml up -d --build 
 - navigate to 127.0.0.1:5001
+
+### Testing:
+- Get the excel file from https://1drv.ms/x/s!AteVrZk2S_HiiZAq8qLRmY1P1BqB4w?e=l9ddb3
 
 ## CLEANUP
 

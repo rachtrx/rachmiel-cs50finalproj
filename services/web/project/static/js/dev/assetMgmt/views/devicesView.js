@@ -50,7 +50,7 @@ class DevicesView extends PreviewView {
                 <span class="card--devices__status--status ${device.status === 'loaned' ? 'unavailable' : 'available'}">${eventToStatus(device.status)}</span>
                 ${device.status === 'loaned' ? `<h4 class="card--devices__status-header--user">User</h4>
                 <a class="btn-text--user" href="${ASSET_HOMEPAGE_URL}views/show_user#${device.userId}">
-                    <span class="card--devices__status--user">Rach</span>
+                    <span class="card--devices__status--user">${device.userName}</span>
                 </a>` : ''}
             </div>
 

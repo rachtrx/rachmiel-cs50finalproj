@@ -242,12 +242,9 @@ export default class ChartView extends View {
         console.log(yearArr);
         console.log(this.totalCostPerYear);
 
-        const labelsArr = yearArr.map((year) => [`${year}`, `$${(this.totalCostPerYear.find((obj) => obj['key'] === year)?.value || 0).toFixed(2)}`])
+        const labelsArr = yearArr.map((year) => [`${year}`, `$${parseFloat((this.totalCostPerYear.find((obj) => parseInt(obj['key']) === year))?.value || 0).toFixed(2)}`])
 
-        console.log(labelsArr);
-
-        console.log(yearArr);
-        console.log(groupedArr);
+        console.log(labelsArr)
 
         return [{
             labels: labelsArr,

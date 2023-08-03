@@ -119,8 +119,8 @@ class OnboardView extends FileUpload {
             deviceObj.modelValue = Number.isFinite(device.modelValue) && device.modelValue || 0
             deviceObj.status = 'registered'
             deviceObj.bookmarked = device.bookmarked || 0
-            deviceObj.location = device.location.trim() || 'unknown'
-            deviceObj.registeredRemarks = device.registeredRemarks.trim() || ''
+            deviceObj.location = String(device.location).trim() || 'unknown'
+            deviceObj.registeredRemarks = String(device.registeredRemarks).trim() || ''
             
             // SHORTEN ALL SN AND ASSET TAG AND CHECK FOR DUPLICATES
             if (!device.registeredDate) {
@@ -135,7 +135,7 @@ class OnboardView extends FileUpload {
                 throw Error(`${device.assetTag}: Vendor is missing`)
 
             }
-            deviceObj.vendorName = capitalizeWords(device.vendorName.trim())
+            deviceObj.vendorName = capitalizeWords(String(device.vendorName).trim())
             if (!vendorArr.includes(deviceObj.vendorName)) {
                 vendorArr.push(deviceObj.vendorName)
 
@@ -171,9 +171,9 @@ class OnboardView extends FileUpload {
                 throw Error(`${device.assetTag}: Model name is missing`)
             }
 
-            deviceObj.deviceType = capitalizeWords(device.deviceType.trim())
+            deviceObj.deviceType = capitalizeWords(String(device.deviceType).trim())
             dtSet.add(deviceObj.deviceType)
-            deviceObj.modelName = capitalizeWords(device.modelName.trim())
+            deviceObj.modelName = capitalizeWords(String(device.modelName).trim())
 
             const errMsg = checkChildAcrossParents.call(this, modelsObj, deviceObj.deviceType, deviceObj.modelName)
             if(errMsg) throw Error(`${device.assetTag}: ${errMsg}`)
@@ -197,8 +197,8 @@ class OnboardView extends FileUpload {
                 if (device.loanedDate < device.registeredDate) {
                     throw Error(`${device.assetTag}: Loan date cannot be before register date`)
                 }
-                deviceObj.userName = capitalizeWords(device.userName.trim())
-                deviceObj.deptName = capitalizeWords(device.deptName.trim())
+                deviceObj.userName = capitalizeWords(String(device.userName).trim())
+                deviceObj.deptName = capitalizeWords(String(device.deptName).trim())
                 deviceObj.loanedDate = excelToJSDate(device.loanedDate)
                 deviceObj.loanedRemarks = device.loanedRemarks || ''
                 deptSet.add(deviceObj.deptName)
