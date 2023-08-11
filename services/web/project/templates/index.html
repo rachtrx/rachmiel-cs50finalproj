@@ -7,12 +7,13 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" />
         <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
         <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/gos-badge.png') }}" />
-        {% block scripts %}{% endblock %}
+        {% block links %}{% endblock %} {% block scripts %}{% endblock %}
         <title>GOS &mdash; INVENTORY</title>
     </head>
 
     <body>
         <div class="container">
+            {% if 'user_id' in session %}
             <header class="header">
                 <img src="{{ url_for('static', filename='img/gos-badge.png') }}" alt="GOS School Image" class="logo" />
 
@@ -66,14 +67,20 @@
                         </div>
                     </div>
 
-                    <!-- <div class="user-nav__profiles">
-                        <button class="user-nav__profiles-dropdown">
-                            <span class="user-nav__text">Welcome, Rach</span>
-                        </button>
-                        <div class="user-nav__profiles-dropdown-menu"></div>
-                    </div> -->
+                    <div class="user-nav__settings">
+                        <div class="user-nav__settings-dropdown">
+                            <svg class="user-nav__icon">
+                                <use xlink:href="{{ url_for('static', filename='sprite.svg') }}#icon-cog"></use>
+                            </svg>
+                            <span class="user-nav__text">Settings</span>
+                        </div>
+                        <div class="user-nav__settings-dropdown-menu">
+                            <a href="/auth/logout" class="user-nav__link">Logout</a>
+                        </div>
+                    </div>
                 </nav>
             </header>
+            {% endif %}
             <main class="content">{% block main %}{% endblock %}</main>
 
             <!-- RENDER ERROR -->

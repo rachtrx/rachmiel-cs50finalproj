@@ -1,8 +1,9 @@
 import os
-from flask import Flask, redirect, url_for, send_from_directory
+from flask import Flask, redirect, url_for, send_from_directory, session
 
 from .config import Config
-from project.extensions import db, migrate
+from project.extensions import db, migrate, bcrypt, login_manager
+from datetime import timedelta
 
 
 def create_app(config_class=Config):
@@ -15,6 +16,9 @@ def create_app(config_class=Config):
     # Initialize Flask extensions here
     db.init_app(app)
     migrate.init_app(app, db)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
 
     # Register blueprints here
     from project.auth import bp as auth_bp
@@ -31,5 +35,10 @@ def create_app(config_class=Config):
     @app.route('/static/<path:filename>')
     def serve_static(filename):
         return send_from_directory(app.config["STATIC_FOLDER"], filename)
+
+    @app.before_request
+    def session_handler():
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=1)
 
     return app

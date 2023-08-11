@@ -2,7 +2,8 @@ import uuid
 import json
 import os
 
-from flask import render_template, request, jsonify, redirect, url_for, current_app
+from flask import render_template, request, jsonify, redirect, url_for, current_app, session
+from flask_login import login_required
 from project.asset.forms import bp
 from project.extensions import db
 from project.asset.models import Model, Device, User, Event, Vendor, DeviceType, Dept
@@ -55,6 +56,7 @@ def update_status(asset_id, event_type, user_id=None):
 
 
 @bp.route('/onboard', methods=["GET", "POST"])
+@login_required
 def onboard_devices():
     if request.method == "GET":
         return render_template("/forms/onboard.html")
@@ -180,6 +182,7 @@ def onboard_devices():
 
 
 @bp.route('/register_model', methods=["GET", "POST"])
+@login_required
 def create_device():
     if request.method == "GET":
         device_types = []
@@ -236,7 +239,9 @@ def create_device():
 
 
 @bp.route('/register_device', methods=["GET", "POST"])
+@login_required
 def register_device():
+    print("User ID: {}".format(session.get('user_id')))
     if request.method == "GET":
         vendors = db.session.query(Vendor.vendor_name).distinct().order_by(
             Vendor.vendor_name.asc()).all()
@@ -336,6 +341,7 @@ def register_device():
 
 
 @bp.route('/loan_device', methods=["GET", "POST"])
+@login_required
 def loan_device():
     if request.method == "GET":
         return render_template("/forms/loan_device.html")
@@ -385,6 +391,7 @@ def loan_device():
 
 
 @bp.route('/returned_device', methods=["GET", "POST"])
+@login_required
 def returned_device():
     if request.method == "GET":
         return render_template("/forms/returned_device.html")
@@ -449,6 +456,7 @@ def returned_device():
 
 
 @bp.route('/condemned_device', methods=["GET", "POST"])
+@login_required
 def condemned_device():
     if request.method == "GET":
         return render_template("/forms/condemned_device.html")
@@ -507,6 +515,7 @@ def condemned_device():
 
 
 @bp.route('/create_user', methods=["GET", "POST"])
+@login_required
 def create_user():
     if request.method == "GET":
         depts = db.session.query(Dept.dept_name
@@ -578,6 +587,7 @@ def create_user():
 
 
 @bp.route('/remove_user', methods=["GET", "POST"])
+@login_required
 def remove_user():
     if request.method == "GET":
         return render_template("/forms/remove_user.html")

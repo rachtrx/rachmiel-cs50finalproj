@@ -192,8 +192,10 @@
             }
         }
 
-        &--vendor {
-
+        &--email, &--pwd {
+            display: grid;
+            grid-template-rows: repeat(2, min-content);
+            grid-gap: 1rem;
         }
     }
 

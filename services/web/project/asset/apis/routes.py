@@ -1,6 +1,7 @@
 import os
 
 from flask import render_template, request, jsonify, send_file, redirect, url_for, current_app
+from flask_login import login_required
 from project.asset.apis import bp
 from project.extensions import db
 from project.asset.models import Model, Device, User, Event, Vendor, DeviceType, Dept
@@ -13,6 +14,7 @@ from werkzeug.utils import secure_filename
 
 
 @bp.route('/upload_pdf', methods=["POST"])
+@login_required
 def upload_pdf():
     if request.method == "POST":
         # Get the PDF file from the request
@@ -29,6 +31,7 @@ def upload_pdf():
 
 
 @bp.route('/download_pdf', methods=["POST"])
+@login_required
 def download_pdf():
     eventId = request.get_json()
 
@@ -45,6 +48,7 @@ def download_pdf():
 
 
 @bp.route('/get_filename', methods=["POST"])
+@login_required
 def get_file_name():
     eventId = request.get_json()
     event = Event.query.get(eventId)
@@ -56,6 +60,7 @@ def get_file_name():
 
 
 @bp.route('/all_devices', methods=["GET"])
+@login_required
 def generate_all_devices():
     if not db.session.query(exists().where(Device.id.isnot(None))).scalar() or not db.session.query(exists().where(User.id.isnot(None))).scalar():
         return jsonify({'message': 'no data'}), 200
@@ -94,6 +99,7 @@ def generate_all_devices():
 
 
 @bp.route('/check_onboard', methods=["POST"])
+@login_required
 def check_onboard():
 
     data = request.get_json()
@@ -183,6 +189,7 @@ def check_onboard():
 
 
 @bp.route('/devices_overview')
+@login_required
 def generate_dashboard():
 
     _top_devices = []
@@ -276,14 +283,14 @@ def generate_dashboard():
 
         # FILTER AGE OF DEVICES
         _devices_age = db.session.query(
-            func.floor(func.extract('epoch', func.now() - Device.registered_date) / 31556952).label('key'),
+            func.floor((func.extract('epoch', func.now() - Device.registered_date) / 31556952)).label('key'),
             func.count('*').label('value')
         ).filter(
             Device.status != 'condemned'
         ).group_by(
-            func.floor(func.extract('epoch', func.now() - Device.registered_date) / 31556952)
+            func.floor((func.extract('epoch', func.now() - Device.registered_date) / 31556952))
         ).order_by(
-            func.floor(func.extract('epoch', func.now() - Device.registered_date) / 31556952).asc()
+            func.floor((func.extract('epoch', func.now() - Device.registered_date) / 31556952)).asc()
         ).all()
 
         print(_devices_age)
@@ -357,6 +364,7 @@ def generate_dashboard():
 
 
 @bp.route('/all_users')
+@login_required
 def generate_all_users():
     if not db.session.query(exists().where(Device.id.isnot(None))).scalar() or not db.session.query(exists().where(User.id.isnot(None))).scalar():
         return jsonify({'message': 'no data'}), 200
@@ -386,6 +394,7 @@ def generate_all_users():
 
 
 @bp.route('/all_events')
+@login_required
 def generate_all_events():
 
     if not db.session.query(exists().where(Device.id.isnot(None))).scalar() or not db.session.query(exists().where(User.id.isnot(None))).scalar():
@@ -419,6 +428,7 @@ def generate_all_events():
 
 
 @bp.route('/devices/<deviceId>')
+@login_required
 def generate_show_device(deviceId):
 
     raw_details = db.session.query(
@@ -482,6 +492,7 @@ def generate_show_device(deviceId):
 
 
 @bp.route('/users/<userId>')
+@login_required
 def generate_show_user(userId):
 
     raw_details = db.session.query(
@@ -537,6 +548,7 @@ def generate_show_user(userId):
 
 
 @bp.route('/edit_data', methods=["POST"])
+@login_required
 def update_remarks():
     data = request.get_json()
     data_type, data_id, data_value = data
@@ -566,6 +578,7 @@ def update_remarks():
 # SECTION PREVIEWS
 # API FOR MODELS
 @bp.route('/models', methods=["POST"])
+@login_required
 def generate_models():
     data = request.get_json()
     model_name = "%" + data + "%"
@@ -590,6 +603,7 @@ def generate_models():
 
 
 @bp.route('/devices', methods=["POST"])
+@login_required
 def generate_devices():
 
     raw_data = request.get_json()
@@ -623,6 +637,7 @@ def generate_devices():
 
 
 @bp.route('/users', methods=["POST"])
+@login_required
 def generate_users():
     raw_data = request.get_json()
 
@@ -669,6 +684,7 @@ def generate_users():
 
 
 @bp.route('/user', methods=["POST"])
+@login_required
 def generate_user():
     asset_id = request.get_json()
     _user = db.session.query(

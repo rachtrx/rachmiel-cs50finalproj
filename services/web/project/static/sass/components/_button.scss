@@ -350,7 +350,8 @@
     fill: $color-red-1;
 }
 
-.btn--remove-file {
+// SVG
+.btn--remove-file, .btn-close-alert {
     position: absolute;
     cursor: pointer;
     height: 1.8rem;

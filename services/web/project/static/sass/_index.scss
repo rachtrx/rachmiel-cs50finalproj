@@ -3,7 +3,7 @@
     display: grid;
     grid-template-rows: min-content min-content min-content;
     border-radius: 7px;
-    background-color: $color-grey-dark-3;
+    background-color: $color-primary-2;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -34,7 +34,7 @@
     align-items: stretch;
 
     // change background color when the children elements are hovered
-    &__devices, &__users, &__history, &__home {
+    &__devices, &__users, &__history, &__home, &__settings {
 
         position: relative; // for the dropdown-menu
         

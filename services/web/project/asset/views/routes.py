@@ -1,4 +1,5 @@
 from flask import render_template, request, jsonify, redirect, url_for
+from flask_login import login_required
 from project.asset.views import bp
 from project.extensions import db
 from project.asset.models import Device, Model, User, Event, Vendor, DeviceType, Dept
@@ -6,6 +7,7 @@ from sqlalchemy import desc, exists, distinct, func
 
 
 @bp.route('/devices')
+@login_required
 def devices_view():
     _device_types = db.session.query(DeviceType.device_type).all()
     _vendors = db.session.query(Vendor.vendor_name).all()
@@ -13,7 +15,7 @@ def devices_view():
     _ages = db.session.query(
         func.floor((func.extract('epoch', func.now() - Device.registered_date) / 31556952)).label('device_age')
     ).order_by(
-        func.floor(func.extract('epoch', func.now() - Device.registered_date) / 31556952).asc()
+        func.floor((func.extract('epoch', func.now() - Device.registered_date) / 31556952)).asc()
     ).distinct().all()
 
     print(_ages)
@@ -29,6 +31,7 @@ def devices_view():
 
 
 @bp.route('/history', methods=["GET"])
+@login_required
 def history_view():
 
     _device_types = db.session.query(DeviceType.device_type).all()
@@ -41,6 +44,7 @@ def history_view():
 
 
 @bp.route('/show_device', methods=["GET", "POST"])
+@login_required
 def show_device():
     if request.method == "GET":
         return render_template("/views/show_device.html")
@@ -69,6 +73,7 @@ def show_device():
 
 
 @bp.route('/users')
+@login_required
 def users_view():
     if request.method == "GET":
 
@@ -80,6 +85,7 @@ def users_view():
 
 
 @bp.route('/show_user', methods=["POST", "GET"])
+@login_required
 def show_user():
     if request.method == "GET":
         return render_template("/views/show_user.html")

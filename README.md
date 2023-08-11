@@ -30,7 +30,7 @@
 - npm run build:parcel 
 - npm run build:css 
 - docker-compose -f docker-compose.prod.yml up -d --build 
-- docker-compose -f docker-compose.prod.yml exec web python manage.py create_db 
+- docker-compose -f docker-compose.prod.yml exec web python manage.py create_db
 - navigate to 127.0.0.1:1337
 
 

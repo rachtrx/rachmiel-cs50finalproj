@@ -5,7 +5,7 @@ print(basedir)
 
 
 class Config:
-    SECRET_KEY = b'G\x82\xa9*\x00\xe8]\xa3\xc7\x82\xec\xe9\xbf8L\xf0'
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
     # Database
     SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI = os.getenv(

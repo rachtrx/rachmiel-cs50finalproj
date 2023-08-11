@@ -13,8 +13,12 @@ cryptography==41.0.2
 cs50==9.2.5
 dataclasses==0.6
 DateTime==5.1
+dnspython==2.4.2
+email-validator==2.0.0.post2
 et-xmlfile==1.1.0
 Flask==2.3.2
+Flask-Bcrypt==1.0.1
+Flask-Login==0.6.2
 Flask-Migrate==4.0.4
 Flask-Session==0.5.0
 Flask-SQLAlchemy==3.0.5
@@ -32,9 +36,9 @@ msal-extensions==1.0.0
 openpyxl==3.1.2
 packaging==23.1
 portalocker==2.7.0
-psycopg2-binary==2.9.6
 psycopg==3.1.9
 psycopg2==2.9.6
+psycopg2-binary==2.9.6
 pycparser==2.21
 PyJWT==2.8.0
 python-dateutil==2.8.2

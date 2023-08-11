@@ -2,6 +2,21 @@ from project.extensions import db
 from datetime import datetime
 from dataclasses import dataclass
 from sqlalchemy import Numeric
+from flask_login import UserMixin
+
+
+@dataclass
+class Admin(UserMixin, db.Model):
+
+    id: int
+    username: str
+    email: str
+    pwd: str
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    pwd = db.Column(db.String(300), nullable=False, unique=True)
 
 
 @dataclass
