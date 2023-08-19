@@ -55,12 +55,10 @@ RUN pip install --no-cache /wheels/*
 # copy entrypoint-prod.sh
 COPY ./entrypoint.sh $APP_HOME
 
-RUN mkdir 
-
-RUN chmod +x $APP_HOME/entrypoint.sh
-
 # copy project
 COPY . $APP_HOME
+
+RUN mkdir $APP_HOME/project/uploads
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
@@ -68,7 +66,7 @@ RUN chown -R app:app $APP_HOME
 # change to the app user
 USER app
 
-RUN chmod +x /home/app/web/entrypoint.sh
+RUN chmod +x $APP_HOME/entrypoint.sh
 
 # run entrypoint.prod.sh
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
