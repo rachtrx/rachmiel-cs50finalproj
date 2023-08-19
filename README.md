@@ -20,7 +20,7 @@
 - . venv/bin/activate
 - cd rachmiel-cs50finalproj
 
-## For CS50 staff:
+### Create .env files
 - remove all the .example extension for the env files, which would result in .env.dev, .env.prod, and .env.prod.db
 
 ## BUILD (choose between Prod or Dev)
@@ -31,7 +31,9 @@
 - npm run build:css 
 - docker-compose -f docker-compose.prod.yml up -d --build 
 - docker-compose -f docker-compose.prod.yml exec web python manage.py create_db
+- docker-compose -f docker-compose.prod.yml exec web python manage.py seed_db
 - navigate to 127.0.0.1:80
+- login with email: test@test.com and password: 1234
 
 
 ### Development: Resets the database by default - see entrypoint.sh
@@ -40,6 +42,7 @@
 - npm run watch:sass
 - docker-compose -f docker-compose.yml up -d --build 
 - navigate to 127.0.0.1:5001
+- login with email: test@test.com and password: 1234
 
 ### Testing:
 #### Create Device:
